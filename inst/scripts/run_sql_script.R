@@ -8,8 +8,6 @@ library(dbhelper)
 p = arg_parser('Run SQL from file or text input')
 p = add_argument(p, "dsn", help='DSN')
 p = add_argument(p, "sql_script", help='SQL script')
-# p = add_argument(p, "--dsn", help="DSN")
-# p = add_argument(p, "--sql_script", help="SQL file")
 args = parse_args(p)
 
 # sqlite = dbConnect(odbc(), 'sqlite')
