@@ -9,5 +9,4 @@ run_sql_script = function(conn, filename, start_date=NULL, end_date=NULL) {
     s = glue::glue_sql(sql, .con=conn, start_date=start_date, end_date=end_date)
     dbExecute(conn, s)
   })
-  dbDisconnect(conn)
 }
