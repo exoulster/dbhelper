@@ -1,5 +1,5 @@
 
-
+#' Run SQL script from file
 #' @export
 run_sql_script = function(conn, filename, start_date=NULL, end_date=NULL) {
   sqls = parse_sql_script(filename)
