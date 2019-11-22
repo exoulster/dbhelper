@@ -4,7 +4,7 @@
 \alias{run_sql_script}
 \title{Run SQL script from file}
 \usage{
-run_sql_script(conn, filename, start_date = NULL, end_date = NULL)
+run_sql_script(conn, filename, start_date = NA, end_date = NA)
 }
 \description{
 Run SQL script from file

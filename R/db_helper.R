@@ -92,3 +92,11 @@ tbbl = function(conn, table_name) {
 }
 
 
+#' get sql query
+#' @export
+parse_sql_script = function(sql_script) {
+  s = readr::read_file(sql_script)
+  s = trimws(s)
+  sqls = strsplit(s, '\\;')[[1]]
+  lapply(sqls, dplyr::sql)
+}
