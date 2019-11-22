@@ -17,5 +17,5 @@ args = parse_args(p)
 
 sqlite = dbConnect(odbc(), 'sqlite')
 conn = dbConnect(odbc(), dsn=args$dsn)
-run_sql_script(args$sql_script)
+run_sql_script(conn, args$sql_script, args$start_date, args$end_date)
 dbDisconnect(conn)
