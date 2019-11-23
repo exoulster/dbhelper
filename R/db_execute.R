@@ -2,6 +2,7 @@
 #' Run SQL script from file
 #' @export
 run_sql_script = function(conn, filename, start_date=NA, end_date=NA) {
+  st = Sys.time()
   sqls = parse_sql_script(filename)
 
   lapply(sqls, function(sql) {
@@ -12,4 +13,21 @@ run_sql_script = function(conn, filename, start_date=NA, end_date=NA) {
       dbExecute(conn, s)
     }
   })
+  et = Sys.time()
+  mins = round(difftime(et, st, units='mins'), 2)
+  msg = glue::glue('successfully processed records from {start_date} to {end_date} in {mins} minutes',
+                   start_date=start_date, end_date=end_date, mins=mins)
+  message(msg)
+}
+
+
+#' @export
+run_sql_script_by = function(conn, filename, start_date, end_date, by='month') {
+  rng = seq.Date(from=start_date, to=end_date, by=by)
+  rng2 = c(rng[2:length(rng)], end_date)
+  mapply(function(sd, ed) {
+    if (sd != ed) {
+      run_sql_script(conn, filename, sd, ed)
+    }
+  }, rng, rng2)
 }
