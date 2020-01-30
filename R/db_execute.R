@@ -1,5 +1,9 @@
 
 #' Run SQL script from file
+#' @param filename file name with full path
+#' @param start_date start date in format YYYY-MM-DD
+#' @param end_date end date in format YYYY-MM-DD
+#' @param by period definition in string
 #' @export
 run_sql_script = function(conn, filename, start_date=NA, end_date=NA) {
   st = Sys.time()
@@ -21,6 +25,11 @@ run_sql_script = function(conn, filename, start_date=NA, end_date=NA) {
 }
 
 
+#' Run SQL script by period
+#' @param filename file name with full path
+#' @param start_date start date in format YYYY-MM-DD
+#' @param end_date end date in format YYYY-MM-DD
+#' @param by period definition in string
 #' @export
 run_sql_script_by = function(conn, filename, start_date, end_date, by='month') {
   rng = seq.Date(from=start_date, to=end_date, by=by)

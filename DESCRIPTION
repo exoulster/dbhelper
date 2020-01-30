@@ -1,6 +1,6 @@
 Package: dbhelper
 Title: DB helper functions
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Jonas", "Gu", email = "exoulster@gmail.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.5.2)
@@ -12,7 +12,10 @@ Imports:
     rlang,
     argparser,
     RSQLite,
-    glue
+    glue,
+    stringr,
+    odbc,
+    DBI
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0)

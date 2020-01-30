@@ -96,7 +96,29 @@ tbbl = function(conn, table_name) {
 #' @export
 parse_sql_script = function(sql_script) {
   s = readr::read_file(sql_script)
-  s = trimws(s)
-  sqls = strsplit(s, '\\;')[[1]]
-  lapply(sqls, dplyr::sql)
+  sqls = strsplit(s, '\\;')[[1]] %>%
+    lapply(function(s) {
+      s %>%
+        remove_comments() %>%
+        replace_double_quotes()
+    }) %>%
+      trimws()
+  Filter(function(x) x != '', sqls)
+}
+
+
+#' @export
+remove_comments = function(s) {
+  # remove block comments
+  s = stringr::str_replace_all(s, '\\/\\*.*\\*\\/', '')
+
+  # remove single line comments
+  s = stringr::str_replace_all(s, '\\-\\-.*', '')
+  s
+}
+
+#' @export
+replace_double_quotes = function(s) {
+  s = stringr::str_replace_all(s, '\\"', "\\'")
+  s
 }
