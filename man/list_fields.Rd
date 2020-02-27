@@ -4,7 +4,7 @@
 \alias{list_fields}
 \title{List fields of a table}
 \usage{
-list_fields(conn = NULL, table_name, schema = NULL)
+list_fields(conn = NULL, table_name)
 }
 \arguments{
 \item{table_name}{table name}

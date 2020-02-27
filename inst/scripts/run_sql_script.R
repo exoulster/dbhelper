@@ -18,10 +18,7 @@ args = parse_args(p)
 
 sqlite = dbConnect(odbc(), 'sqlite')
 conn = dbConnect(odbc(), dsn=args$dsn)
-if (is.na(args$by)) {
-  run_sql_script(conn, args$sql_script, args$start_date, args$end_date)
-} else {
-  run_sql_script_by(conn, args$sql_script, args$start_date, args$end_date, by=args$by)
-}
-
+run_sql_script(conn, filename=args$sql_script,
+               start_date=args$start_date, end_date=args$end_date,
+               by=args$by)
 dbDisconnect(conn)

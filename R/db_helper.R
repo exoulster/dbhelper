@@ -1,5 +1,5 @@
 
-split_table_name = function(conn=NULL, table_name) {
+parse_table_name = function(conn=NULL, table_name) {
   table_name_txt = table_name %>%
     strsplit('.', fixed=TRUE) %>%
     .[[1]]
@@ -66,8 +66,9 @@ list_tables = function(conn=NULL, schema=NULL, pattern='.*') {
 #' List fields of a table
 #' @param table_name table name
 #' @export
-list_fields = function(conn=NULL, table_name, schema=NULL) {
-  DBI::dbListFields(conn, table_name, schema=schema)
+list_fields = function(conn=NULL, table_name) {
+  params = parse_table_name(conn=conn, table_name=table_name)
+  DBI::dbListFields(conn, params$table, schema=params$schema)
 }
 
 
@@ -80,7 +81,7 @@ tbbl = function(conn, table_name) {
     if (is.null(globalenv()$con)) stop('con is not available, please set up connection')
     conn = globalenv()$con
   }
-  table_name_txt = split_table_name(conn=conn, table_name=table_name)
+  table_name_txt = parse_table_name(conn=conn, table_name=table_name)
   schema = table_name_txt[1]
   table = table_name_txt[2]
 
@@ -91,23 +92,6 @@ tbbl = function(conn, table_name) {
   }
 }
 
-
-#' get sql query
-#' @export
-parse_sql_script = function(sql_script) {
-  s = readr::read_file(sql_script)
-  sqls = strsplit(s, '\\;')[[1]] %>%
-    lapply(function(s) {
-      s %>%
-        remove_comments() %>%
-        replace_double_quotes()
-    }) %>%
-      trimws()
-  Filter(function(x) x != '', sqls)
-}
-
-
-#' @export
 remove_comments = function(s) {
   # remove block comments
   s = stringr::str_replace_all(s, '\\/\\*.*\\*\\/', '')
@@ -117,8 +101,37 @@ remove_comments = function(s) {
   s
 }
 
-#' @export
 replace_double_quotes = function(s) {
   s = stringr::str_replace_all(s, '\\"', "\\'")
   s
 }
+
+replace_vars = function(s) {
+  s = stringr::str_replace_all(s, '[:punct:]?\\$(\\{[[:alnum:][:punct:]]+\\})[:punct:]?', '\\1')
+  s
+}
+
+#' Clean up sql query
+#' @export
+parse_sql = function(sql) {
+  sqls = strsplit(sql, '\\;')[[1]] %>%
+    lapply(function(s) {
+      s %>%
+        remove_comments() %>%
+        replace_double_quotes() %>%
+        replace_vars()
+    }) %>%
+    trimws()
+  Filter(function(x) x != '', sqls) %>%
+    dplyr::sql()
+}
+
+#' Get sql query from file
+#' @export
+parse_sql_script = function(sql_script) {
+  s = readr::read_file(sql_script)
+  parse_sql(s)
+}
+
+
+

@@ -2,10 +2,10 @@
 % Please edit documentation in R/db_helper.R
 \name{parse_sql_script}
 \alias{parse_sql_script}
-\title{get sql query}
+\title{Get sql query from file}
 \usage{
 parse_sql_script(sql_script)
 }
 \description{
-get sql query
+Get sql query from file
 }
