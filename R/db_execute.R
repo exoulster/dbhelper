@@ -28,6 +28,11 @@ run_sql = function(conn, sql_statement, ...,
   if (!is.na(offset)) {
     offset = as.numeric(offset)
   }
+  if (length(list(...))==0 & is.na(start_date) & is.na(end_date)) {
+    interpolation = FALSE
+  } else {
+    interpolation = TRUE
+  }
   st = Sys.time()
 
   sqls = sql_statement
@@ -50,8 +55,13 @@ run_sql = function(conn, sql_statement, ...,
 
   f = function(conn, sqls, ..., start_date=NA, end_date=NA, verbose=FALSE) {
     lapply(sqls, function(sql){
-      s = glue::glue_sql(sql, .con=conn, ...,
-                         start_date=start_date, end_date=end_date)
+      if (interpolation) {
+        s = glue::glue_sql(sql, .con=conn, ...,
+                           start_date=start_date, end_date=end_date)
+      } else {
+        s = sql
+      }
+
       dbExecute(conn, s)
       if (verbose) {
         message('sql executed: ', s)
