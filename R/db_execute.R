@@ -66,7 +66,7 @@ run_sql = function(conn, sql_statement, ...,
     rng = break_into_chunks(start_date=start_date, end_date=end_date, by=by)
     mapply(function(sd, ed) {
       tm = system.time(f(conn=conn, sqls=sqls, ..., start_date=sd, end_date=ed, verbose=verbose))
-      message('data processed from ', sd, ' to ', ed, ' in ', round(tm[[3]]/60, 2), ' minutes')
+      message('data from ', sd, ' to ', ed, ' processed in ', round(tm[[3]]/60, 2), ' minutes')
     }, rng$start_dates, rng$end_dates)
   }
 
