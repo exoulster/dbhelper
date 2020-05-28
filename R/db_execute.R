@@ -62,7 +62,7 @@ run_sql = function(conn, sql_statement, ...,
         s = sql
       }
 
-      dbExecute(conn, s)
+      DBI::dbExecute(conn, s)
       if (verbose) {
         message('sql executed: ', s)
       }

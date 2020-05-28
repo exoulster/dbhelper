@@ -2,6 +2,8 @@
 
 export(ctas)
 export(db_migrate)
+export(format_period_unit)
+export(get_query)
 export(insert_ignore)
 export(list_fields)
 export(list_tables)

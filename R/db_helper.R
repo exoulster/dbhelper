@@ -5,7 +5,7 @@ parse_table_name = function(conn=NULL, table_name) {
     .[[1]]
 
   if (!is.null(conn)) {
-    if (class(conn) == 'OraConnection') {
+    if ('OraConnection' %in% class(conn)) {
       table_name_txt = toupper(table_name_txt)
     }
   }
