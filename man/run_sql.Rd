@@ -6,11 +6,27 @@
 \alias{run_sql_script_by}
 \title{Run SQL script from file}
 \usage{
-run_sql(conn, sql_statement, ..., start_date = NA, end_date = NA,
-  by = NA, offset = NA, verbose = FALSE)
+run_sql(
+  conn,
+  sql_statement,
+  ...,
+  start_date = NA,
+  end_date = NA,
+  by = NA,
+  offset = NA,
+  verbose = FALSE
+)
 
-run_sql_script(conn, filename, ..., start_date = NA, end_date = NA,
-  by = NA, offset = NA, verbose = FALSE)
+run_sql_script(
+  conn,
+  filename,
+  ...,
+  start_date = NA,
+  end_date = NA,
+  by = NA,
+  offset = NA,
+  verbose = FALSE
+)
 
 run_sql_script_by(conn, filename, start_date, end_date, by = "month")
 }

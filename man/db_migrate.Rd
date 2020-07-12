@@ -4,8 +4,14 @@
 \alias{db_migrate}
 \title{Migrate table from source to target}
 \usage{
-db_migrate(source_conn, target_conn, source_table, source_schema = NULL,
-  target_schema = NULL, overwrite = TRUE)
+db_migrate(
+  source_conn,
+  target_conn,
+  source_table,
+  source_schema = NULL,
+  target_schema = NULL,
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{source_conn}{source db connection}
